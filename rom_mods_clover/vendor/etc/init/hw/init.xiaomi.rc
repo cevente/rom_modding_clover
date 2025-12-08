@@ -1,0 +1,349 @@
+on early-boot
+    chmod 0664 /sys/bus/platform/devices/soc:xiaomi_fingerprint/fingerdown
+    chown system graphics /sys/bus/platform/devices/soc:xiaomi_fingerprint/fingerdown
+
+on post-fs-data
+    mkdir /data/vendor/misc 01771 system system
+    mkdir /data/vendor/misc/xiaomi-fp 0770 system system
+    mkdir /persist/xioami-fp 0770 system system
+    mkdir /mnt/vendor/persist/mi_fp 0770 system system
+    mkdir /data/vendor/fpc 0770 system system
+    mkdir /data/vendor/fpdump 0770 system system
+    mkdir /data/vendor/goodix 0770 system system
+    mkdir /data/vendor/fingerprint 0770 system system
+    mkdir /mnt/vendor/persist/goodix 0770 system system
+    mkdir /mnt/vendor/persist/fpc 0770 system system
+    mkdir /data/vendor/nfc 0770 nfc nfc
+
+on boot
+    chmod 0666 /dev/goodix_fp
+    chown system system /dev/goodix_fp
+    chmod 0666 /dev/xiaomi-fp
+    chown system system /dev/xiaomi-fp
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/irq
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/irq_enable
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/wakeup_enable
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/hw_reset
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/device_prepare
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/fingerdown_wait
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/vendor
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/request_vreg
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/simulate_irq
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/finger_irq
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/power_cfg
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/power_ctrl
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/screen
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/irq
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/wakeup_enable
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/hw_reset
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/device_prepare
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/vendor
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/request_vreg
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/simulate_irq
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/finger_irq
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/power_cfg
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/power_ctrl
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/screen
+    chmod 0666 /dev/input/event2
+    chown system system /sys/bus/platform/devices/soc:fpc1020/irq
+    chown system system /sys/bus/platform/devices/soc:fpc1020/wakeup_enable
+    chown system system /sys/bus/platform/devices/soc:fpc1020/modalias
+    chown system system /sys/bus/platform/devices/soc:fpc1020/compatible_all
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/irq
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/wakeup_enable
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/modalias
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/compatible_all
+
+    # Xiaomi Camera
+    # Add a cpuset for the camera daemon
+    # We want all cores for camera
+    mkdir /dev/cpuset/camera-daemon
+    chown cameraserver cameraserver /dev/cpuset/camera-daemon
+    chown cameraserver cameraserver /dev/cpuset/camera-daemon/tasks
+    chown cameraserver cameraserver /mnt/vendor/persist/camera
+    chown cameraserver cameraserver /mnt/vendor/persist/camera/rear_dc_cal_wu.bin
+    chmod 0660 /dev/cpuset/camera-daemon/tasks
+
+service vendor.goodix-events /vendor/bin/init.goodix.events.sh
+    class late_start
+    user root
+    group root system input
+    disabled
+    oneshot
+
+service vendor.sensors-hal-multihal /vendor/bin/hw/android.hardware.sensors-service.xiaomi-multihal
+    override
+    class hal
+    user system
+    group system wakelock context_hub input uhid
+    writepid /dev/cpuset/system-background/tasks
+    socket audio_us_socket_1 seqpacket 0666 system system
+    capabilities BLOCK_SUSPEND
+    rlimit rtprio 10 10        
+
+on post-fs-data
+    write /proc/sys/vm/page-cluster 0
+    # Override readahead to 2MiB during boot
+    write /sys/block/dm-0/queue/read_ahead_kb 2048
+    write /sys/block/dm-1/queue/read_ahead_kb 2048
+    write /sys/block/dm-2/queue/read_ahead_kb 2048
+    write /sys/block/dm-3/queue/read_ahead_kb 2048
+    write /sys/block/dm-4/queue/read_ahead_kb 2048
+    write /sys/block/dm-5/queue/read_ahead_kb 2048
+    write /sys/block/dm-6/queue/read_ahead_kb 2048
+    write /sys/block/dm-7/queue/read_ahead_kb 2048
+    write /sys/block/dm-8/queue/read_ahead_kb 2048
+    write /sys/block/dm-9/queue/read_ahead_kb 2048
+    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
+    write /sys/block/sda/queue/read_ahead_kb 2048
+    write /sys/block/sdb/queue/read_ahead_kb 2048
+    write /sys/block/sdc/queue/read_ahead_kb 2048
+    write /sys/block/sdd/queue/read_ahead_kb 2048
+    write /sys/block/sde/queue/read_ahead_kb 2048
+    write /sys/block/sdf/queue/read_ahead_kb 2048
+
+on boot
+    chown system system /dev/cpuset/cgroup.procs
+    chown system system /dev/cpuset/foreground/cgroup.procs
+    chown system system /dev/cpuset/background/cgroup.procs
+    chown system system /dev/cpuset/system-background/cgroup.procs
+    chown system system /dev/cpuset/top-app/cgroup.procs
+
+    chmod 0666 /dev/cpuset/foreground/cgroup.procs
+    chmod 0666 /dev/cpuset/background/cgroup.procs
+    chmod 0666 /dev/cpuset/system-background/cgroup.procs
+    chmod 0666 /dev/cpuset/top-app/cgroup.procs
+    chmod 0666 /dev/cpuset/cgroup.procs
+
+    chown system system /dev/stune/background/cgroup.procs
+    chown system system /dev/stune/top-app/cgroup.procs
+    chmod 0666 /dev/stune/background/cgroup.procs
+    chmod 0666 /dev/stune/top-app/cgroup.procs
+
+on property:vendor.post_boot.parsed=1
+    #Setup runtime cpusets
+    #write /dev/cpuset/background/cpus 0-1
+    #write /dev/cpuset/foreground/cpus 0-2,4-7
+    #write /dev/cpuset/system-background/cpus 0-3
+    #write /dev/cpuset/top-app/cpus 0-7
+
+       ########################################
+    #           CPUSET  CONFIG
+    ########################################
+
+    # Background: only LITTLE cores 0-1 (Maximum Power Save)
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/background/mems 0
+
+    # System background: 0-3 (All E-Cores)
+    write /dev/cpuset/system-background/cpus 0-3
+    write /dev/cpuset/system-background/mems 0
+
+    # Restricted: 0-3 (All E-Cores)
+    write /dev/cpuset/restricted/cpus 0-3
+    write /dev/cpuset/restricted/mems 0
+
+    # Foreground: E-Cores (0-3) + 2 P-Cores (4-5) - Balanced Performance/Power
+    write /dev/cpuset/foreground/cpus 0-3,4-5
+    write /dev/cpuset/foreground/mems 0
+
+    # Foreground window: match foreground
+    write /dev/cpuset/foreground_window/cpus 0-3,4-5
+    write /dev/cpuset/foreground_window/mems 0
+
+    # Camera-daemon: full access for image processing
+    write /dev/cpuset/camera-daemon/cpus 0-7
+    write /dev/cpuset/camera-daemon/mems 0
+
+    # Top-app: full access for focused app
+    write /dev/cpuset/top-app/cpus 0-7
+    write /dev/cpuset/top-app/mems 0
+
+    # Load balance for top-app (Unchanged)
+    write /dev/cpuset/top-app/sched_load_balance 1
+
+    ########################################
+    #          CPUCTL  CONFIG
+    ########################################
+
+    # -------- cpu.shares (High weights maintained for snappiness) --------
+    write /dev/cpuctl/top-app/cpu.shares 4096
+    write /dev/cpuctl/foreground/cpu.shares 2048
+    write /dev/cpuctl/foreground_window/cpu.shares 2048
+    write /dev/cpuctl/camera-daemon/cpu.shares 4096
+
+    write /dev/cpuctl/system/cpu.shares 1024
+    write /dev/cpuctl/nnapi-hal/cpu.shares 1024
+    write /dev/cpuctl/dex2oat/cpu.shares 512
+
+    write /dev/cpuctl/system-background/cpu.shares 512
+    write /dev/cpuctl/restricted/cpu.shares 256
+    write /dev/cpuctl/background/cpu.shares 128
+    write /dev/cpuctl/rt/cpu.shares 4096
+
+    # -------- uclamp (Lowered mins for Battery Savings) --------
+    # Top-app
+    write /dev/cpuctl/top-app/cpu.uclamp.min 150
+    write /dev/cpuctl/top-app/cpu.uclamp.max 1024
+
+    # Foreground
+    write /dev/cpuctl/foreground/cpu.uclamp.min 80
+    write /dev/cpuctl/foreground/cpu.uclamp.max 1024
+    write /dev/cpuctl/foreground_window/cpu.uclamp.min 96
+    write /dev/cpuctl/foreground_window/cpu.uclamp.max 1024
+
+    # Camera
+    write /dev/cpuctl/camera-daemon/cpu.uclamp.min 256
+    write /dev/cpuctl/camera-daemon/cpu.uclamp.max 1024
+
+    # System
+    write /dev/cpuctl/system/cpu.uclamp.min 48
+    write /dev/cpuctl/system/cpu.uclamp.max 1024
+    write /dev/cpuctl/nnapi-hal/cpu.uclamp.min 128
+    write /dev/cpuctl/nnapi-hal/cpu.uclamp.max 1024
+
+    # dex2oat
+    write /dev/cpuctl/dex2oat/cpu.uclamp.min 96
+    write /dev/cpuctl/dex2oat/cpu.uclamp.max 1024
+
+    # Low priority groups (Unchanged)
+    write /dev/cpuctl/system-background/cpu.uclamp.min 32
+    write /dev/cpuctl/system-background/cpu.uclamp.max 1024
+    write /dev/cpuctl/restricted/cpu.uclamp.min 16
+    write /dev/cpuctl/restricted/cpu.uclamp.max 1024
+    write /dev/cpuctl/background/cpu.uclamp.min 0
+    write /dev/cpuctl/background/cpu.uclamp.max 1024
+
+    # RT (Unchanged)
+    write /dev/cpuctl/rt/cpu.uclamp.min 400
+    write /dev/cpuctl/rt/cpu.uclamp.max 1024
+
+    ########################################
+    #          BLKIO  CONFIG
+    #        (BFQ I/O weights - Unchanged)
+    ########################################
+
+    # Background = lowest priority
+    write /dev/blkio/background/blkio.bfq.weight 100
+
+    # System background
+    write /dev/blkio/system-background/blkio.bfq.weight 150
+
+    # Restricted
+    write /dev/blkio/restricted/blkio.bfq.weight 150
+
+    # Foreground
+    write /dev/blkio/foreground/blkio.bfq.weight 400
+    write /dev/blkio/foreground_window/blkio.bfq.weight 450
+
+    # Top-app = very high I/O priority
+    write /dev/blkio/top-app/blkio.bfq.weight 600
+
+    # Camera = highest because of burst I/O
+    write /dev/blkio/camera-daemon/blkio.bfq.weight 700
+
+   # Disable multiple kswapd threads
+    write /proc/sys/vm/kswapd_threads 1
+
+    # Set CPU Boost Duration
+    write /proc/sys/walt/input_boost/input_boost_ms 200
+
+    # Reset readahead to 128KiB
+    write /sys/block/dm-0/queue/read_ahead_kb 128
+    write /sys/block/dm-1/queue/read_ahead_kb 128
+    write /sys/block/dm-2/queue/read_ahead_kb 128
+    write /sys/block/dm-3/queue/read_ahead_kb 128
+    write /sys/block/dm-4/queue/read_ahead_kb 128
+    write /sys/block/dm-5/queue/read_ahead_kb 128
+    write /sys/block/dm-6/queue/read_ahead_kb 128
+    write /sys/block/dm-7/queue/read_ahead_kb 128
+    write /sys/block/dm-8/queue/read_ahead_kb 128
+    write /sys/block/dm-9/queue/read_ahead_kb 128
+    write /sys/block/dm-10/queue/read_ahead_kb 128
+    write /sys/block/dm-11/queue/read_ahead_kb 128
+    write /sys/block/dm-12/queue/read_ahead_kb 128
+    write /sys/block/dm-13/queue/read_ahead_kb 128
+    write /sys/block/dm-14/queue/read_ahead_kb 128
+    write /sys/block/dm-15/queue/read_ahead_kb 128
+    write /sys/block/dm-16/queue/read_ahead_kb 128
+    write /sys/block/dm-17/queue/read_ahead_kb 128
+    write /sys/block/dm-18/queue/read_ahead_kb 128
+    write /sys/block/dm-19/queue/read_ahead_kb 128
+    write /sys/block/dm-20/queue/read_ahead_kb 128
+    write /sys/block/dm-21/queue/read_ahead_kb 128
+    write /sys/block/dm-22/queue/read_ahead_kb 128
+    write /sys/block/dm-23/queue/read_ahead_kb 128
+    write /sys/block/dm-24/queue/read_ahead_kb 128
+    write /sys/block/dm-25/queue/read_ahead_kb 128
+    write /sys/block/dm-26/queue/read_ahead_kb 128
+    write /sys/block/dm-27/queue/read_ahead_kb 128
+    write /sys/block/dm-28/queue/read_ahead_kb 128
+    write /sys/block/dm-29/queue/read_ahead_kb 128
+    write /sys/block/dm-30/queue/read_ahead_kb 128
+    write /sys/block/dm-31/queue/read_ahead_kb 128
+    write /sys/block/dm-32/queue/read_ahead_kb 128
+    write /sys/block/dm-33/queue/read_ahead_kb 128
+    write /sys/block/dm-34/queue/read_ahead_kb 128
+    write /sys/block/dm-35/queue/read_ahead_kb 128
+    write /sys/block/dm-36/queue/read_ahead_kb 128
+    write /sys/block/dm-37/queue/read_ahead_kb 128
+    write /sys/block/dm-38/queue/read_ahead_kb 128
+    write /sys/block/dm-39/queue/read_ahead_kb 128
+    write /sys/block/dm-40/queue/read_ahead_kb 128
+    write /sys/block/dm-41/queue/read_ahead_kb 128
+    write /sys/block/dm-42/queue/read_ahead_kb 128
+    write /sys/block/dm-43/queue/read_ahead_kb 128
+    write /sys/block/dm-44/queue/read_ahead_kb 128
+    write /sys/block/dm-45/queue/read_ahead_kb 128
+    write /sys/block/dm-46/queue/read_ahead_kb 128
+    write /sys/block/dm-47/queue/read_ahead_kb 128
+    write /sys/block/dm-48/queue/read_ahead_kb 128
+    write /sys/block/dm-49/queue/read_ahead_kb 128
+    write /sys/block/mmcblk0/queue/read_ahead_kb 128
+    write /sys/block/sda/queue/read_ahead_kb 128
+    write /sys/block/sdb/queue/read_ahead_kb 128
+    write /sys/block/sdc/queue/read_ahead_kb 128
+    write /sys/block/sdd/queue/read_ahead_kb 128
+    write /sys/block/sde/queue/read_ahead_kb 128
+    write /sys/block/sdf/queue/read_ahead_kb 128
+
+on property:vendor.post_boot.parsed=1
+    start vendor.goodix-events
+    # Dynamically set IRQ affinity for KGSL and DRM
+    # WALT Tunables for Snapdragon 685 (Bengal) - Low Lag, Low Heat Profile (Step Accurate)
+    ### 🔋 Little Cores (Policy 0: Efficiency/A53-based Cores)
+    # Freq Steps: 300 691.2 940.8 1190.4 1516.8 1804.8 1900.8 (MHz)
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/adaptive_low_freq 940800
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/adaptive_high_freq 1516800
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us 500
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us 10000
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/boost 1
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_load 75
+    write /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq 1516800
+
+    ### ❄️ Big Cores (Policy 4: Performance/A73-based Cores)
+    # Freq Steps: 300 806.4 1056 1344 1766.4 2208 2400 2592 2803.2 (MHz)
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/adaptive_low_freq 1344000
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/adaptive_high_freq 2208000
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/up_rate_limit_us 1000
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/down_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/boost 1
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/hispeed_load 80
+    write /sys/devices/system/cpu/cpufreq/policy4/walt/hispeed_freq 2208000
+
+    # CPUSets
+    setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5,7
+    setprop dalvik.vm.dex2oat-threads 6
+    write /sys/module/damon_reclaim/parameters/enabled Y
+
+   # Enable smart batt and smart charge
+   write /sys/class/qcom-batt/smart_batt 1
+   write /sys/class/qcom-batt/smart_chg 1
+   write /sys/class/power_supply/battery/smart_batt 1
+   write /sys/class/power_supply/battery/smart_chg 1
+
+on property:dalvik.vm.heapstartsize=16
+    write /proc/sys/vm/watermark_boost_factor 0
+
+on property:ro.boot.hwname=*
+    setprop ro.boot.product.hardware.sku ${ro.boot.hwname}
