@@ -4,6 +4,352 @@ on fs
     chmod 0666 /sys/class/thermal/thermal_message/temp_state
     chown system system /sys/class/thermal/thermal_message/temp_state
 
+# ============================================
+# Thermal permissions for /sys/class/thermal/
+# ============================================
+
+# ============================================
+# Thermal zones permissions
+# ============================================
+
+# Directory permissions for all thermal zones
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone0
+chown system system /sys/devices/virtual/thermal/thermal_zone0
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone1
+chown system system /sys/devices/virtual/thermal/thermal_zone1
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone2
+chown system system /sys/devices/virtual/thermal/thermal_zone2
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone3
+chown system system /sys/devices/virtual/thermal/thermal_zone3
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone4
+chown system system /sys/devices/virtual/thermal/thermal_zone4
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone5
+chown system system /sys/devices/virtual/thermal/thermal_zone5
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone6
+chown system system /sys/devices/virtual/thermal/thermal_zone6
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone7
+chown system system /sys/devices/virtual/thermal/thermal_zone7
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone8
+chown system system /sys/devices/virtual/thermal/thermal_zone8
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone9
+chown system system /sys/devices/virtual/thermal/thermal_zone9
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone10
+chown system system /sys/devices/virtual/thermal/thermal_zone10
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone11
+chown system system /sys/devices/virtual/thermal/thermal_zone11
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone12
+chown system system /sys/devices/virtual/thermal/thermal_zone12
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone13
+chown system system /sys/devices/virtual/thermal/thermal_zone13
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone14
+chown system system /sys/devices/virtual/thermal/thermal_zone14
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone15
+chown system system /sys/devices/virtual/thermal/thermal_zone15
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone16
+chown system system /sys/devices/virtual/thermal/thermal_zone16
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone17
+chown system system /sys/devices/virtual/thermal/thermal_zone17
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone18
+chown system system /sys/devices/virtual/thermal/thermal_zone18
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone19
+chown system system /sys/devices/virtual/thermal/thermal_zone19
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone20
+chown system system /sys/devices/virtual/thermal/thermal_zone20
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone21
+chown system system /sys/devices/virtual/thermal/thermal_zone21
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone22
+chown system system /sys/devices/virtual/thermal/thermal_zone22
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone23
+chown system system /sys/devices/virtual/thermal/thermal_zone23
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone24
+chown system system /sys/devices/virtual/thermal/thermal_zone24
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone25
+chown system system /sys/devices/virtual/thermal/thermal_zone25
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone26
+chown system system /sys/devices/virtual/thermal/thermal_zone26
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone27
+chown system system /sys/devices/virtual/thermal/thermal_zone27
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone28
+chown system system /sys/devices/virtual/thermal/thermal_zone28
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone29
+chown system system /sys/devices/virtual/thermal/thermal_zone29
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone30
+chown system system /sys/devices/virtual/thermal/thermal_zone30
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone31
+chown system system /sys/devices/virtual/thermal/thermal_zone31
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone32
+chown system system /sys/devices/virtual/thermal/thermal_zone32
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone33
+chown system system /sys/devices/virtual/thermal/thermal_zone33
+
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone34
+chown system system /sys/devices/virtual/thermal/thermal_zone34
+
+# ============================================
+# Common thermal zone file permissions
+# ============================================
+
+# Read-only files (0444)
+chmod 0444 /sys/devices/virtual/thermal/thermal_zone*/type
+chown system system /sys/devices/virtual/thermal/thermal_zone*/type
+
+chmod 0444 /sys/devices/virtual/thermal/thermal_zone*/available_policies
+chown system system /sys/devices/virtual/thermal/thermal_zone*/available_policies
+
+# Temperature reading (0666 for monitoring apps)
+chmod 0666 /sys/devices/virtual/thermal/thermal_zone*/temp
+chown system system /sys/devices/virtual/thermal/thermal_zone*/temp
+
+# Control files (0664)
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/mode
+chown system system /sys/devices/virtual/thermal/thermal_zone*/mode
+
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/policy
+chown system system /sys/devices/virtual/thermal/thermal_zone*/policy
+
+# Trip point files (0664)
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/trip_point_*
+chown system system /sys/devices/virtual/thermal/thermal_zone*/trip_point_*
+
+# Hysteresis files (0664)
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/*_hyst
+chown system system /sys/devices/virtual/thermal/thermal_zone*/*_hyst
+
+# Cooling device relation files (0664)
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/cdev*
+chown system system /sys/devices/virtual/thermal/thermal_zone*/cdev*
+
+# Thermal control parameters (0664)
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/emul_temp
+chown system system /sys/devices/virtual/thermal/thermal_zone*/emul_temp
+
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/k_*
+chown system system /sys/devices/virtual/thermal/thermal_zone*/k_*
+
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/sustainable_power
+chown system system /sys/devices/virtual/thermal/thermal_zone*/sustainable_power
+
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/integral_cutoff
+chown system system /sys/devices/virtual/thermal/thermal_zone*/integral_cutoff
+
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/offset
+chown system system /sys/devices/virtual/thermal/thermal_zone*/offset
+
+chmod 0664 /sys/devices/virtual/thermal/thermal_zone*/slope
+chown system system /sys/devices/virtual/thermal/thermal_zone*/slope
+
+# ============================================
+# Cooling device permissions
+# ============================================
+
+# Directory permissions for cooling devices
+chmod 0775 /sys/devices/virtual/thermal/cooling_device0
+chown system system /sys/devices/virtual/thermal/cooling_device0
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device1
+chown system system /sys/devices/virtual/thermal/cooling_device1
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device2
+chown system system /sys/devices/virtual/thermal/cooling_device2
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device3
+chown system system /sys/devices/virtual/thermal/cooling_device3
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device4
+chown system system /sys/devices/virtual/thermal/cooling_device4
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device5
+chown system system /sys/devices/virtual/thermal/cooling_device5
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device6
+chown system system /sys/devices/virtual/thermal/cooling_device6
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device7
+chown system system /sys/devices/virtual/thermal/cooling_device7
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device8
+chown system system /sys/devices/virtual/thermal/cooling_device8
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device9
+chown system system /sys/devices/virtual/thermal/cooling_device9
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device10
+chown system system /sys/devices/virtual/thermal/cooling_device10
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device11
+chown system system /sys/devices/virtual/thermal/cooling_device11
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device12
+chown system system /sys/devices/virtual/thermal/cooling_device12
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device13
+chown system system /sys/devices/virtual/thermal/cooling_device13
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device14
+chown system system /sys/devices/virtual/thermal/cooling_device14
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device15
+chown system system /sys/devices/virtual/thermal/cooling_device15
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device16
+chown system system /sys/devices/virtual/thermal/cooling_device16
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device17
+chown system system /sys/devices/virtual/thermal/cooling_device17
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device18
+chown system system /sys/devices/virtual/thermal/cooling_device18
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device19
+chown system system /sys/devices/virtual/thermal/cooling_device19
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device20
+chown system system /sys/devices/virtual/thermal/cooling_device20
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device21
+chown system system /sys/devices/virtual/thermal/cooling_device21
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device22
+chown system system /sys/devices/virtual/thermal/cooling_device22
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device23
+chown system system /sys/devices/virtual/thermal/cooling_device23
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device24
+chown system system /sys/devices/virtual/thermal/cooling_device24
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device25
+chown system system /sys/devices/virtual/thermal/cooling_device25
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device26
+chown system system /sys/devices/virtual/thermal/cooling_device26
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device27
+chown system system /sys/devices/virtual/thermal/cooling_device27
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device28
+chown system system /sys/devices/virtual/thermal/cooling_device28
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device29
+chown system system /sys/devices/virtual/thermal/cooling_device29
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device30
+chown system system /sys/devices/virtual/thermal/cooling_device30
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device31
+chown system system /sys/devices/virtual/thermal/cooling_device31
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device32
+chown system system /sys/devices/virtual/thermal/cooling_device32
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device33
+chown system system /sys/devices/virtual/thermal/cooling_device33
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device34
+chown system system /sys/devices/virtual/thermal/cooling_device34
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device35
+chown system system /sys/devices/virtual/thermal/cooling_device35
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device36
+chown system system /sys/devices/virtual/thermal/cooling_device36
+
+chmod 0775 /sys/devices/virtual/thermal/cooling_device37
+chown system system /sys/devices/virtual/thermal/cooling_device37
+
+# ============================================
+# Common cooling device file permissions
+# ============================================
+
+# Read-only files (0444)
+chmod 0444 /sys/devices/virtual/thermal/cooling_device*/type
+chown system system /sys/devices/virtual/thermal/cooling_device*/type
+
+chmod 0444 /sys/devices/virtual/thermal/cooling_device*/max_state
+chown system system /sys/devices/virtual/thermal/cooling_device*/max_state
+
+# Control files (0664)
+chmod 0664 /sys/devices/virtual/thermal/cooling_device*/cur_state
+chown system system /sys/devices/virtual/thermal/cooling_device*/cur_state
+
+# Stats directory permissions
+chmod 0775 /sys/devices/virtual/thermal/cooling_device*/stats
+chown system system /sys/devices/virtual/thermal/cooling_device*/stats
+
+# Stats files
+chmod 0664 /sys/devices/virtual/thermal/cooling_device*/stats/reset
+chown system system /sys/devices/virtual/thermal/cooling_device*/stats/reset
+
+chmod 0444 /sys/devices/virtual/thermal/cooling_device*/stats/time_in_state_ms
+chown system system /sys/devices/virtual/thermal/cooling_device*/stats/time_in_state_ms
+
+chmod 0444 /sys/devices/virtual/thermal/cooling_device*/stats/trans_table
+chown system system /sys/devices/virtual/thermal/cooling_device*/stats/trans_table
+
+chmod 0444 /sys/devices/virtual/thermal/cooling_device*/stats/total_trans
+chown system system /sys/devices/virtual/thermal/cooling_device*/stats/total_trans
+
+# ============================================
+# Power subdirectory permissions
+# ============================================
+
+# Thermal zone power directories
+chmod 0775 /sys/devices/virtual/thermal/thermal_zone*/power
+chown system system /sys/devices/virtual/thermal/thermal_zone*/power
+
+# Cooling device power directories
+chmod 0775 /sys/devices/virtual/thermal/cooling_device*/power
+chown system system /sys/devices/virtual/thermal/cooling_device*/power
+
+# Power control files (0664)
+chmod 0664 /sys/devices/virtual/thermal/*/power/*
+chown system system /sys/devices/virtual/thermal/*/power/*
+
+# ============================================
+# Default permissions for any other thermal files
+# ============================================
+
+# Set default 0664 for any other files in thermal directories
+chmod 0664 /sys/devices/virtual/thermal/*/*
+chown system system /sys/devices/virtual/thermal/*/*
+
+# Set 0444 for uevent files
+chmod 0444 /sys/devices/virtual/thermal/*/uevent
+chown system system /sys/devices/virtual/thermal/*/uevent
+
 on post-fs-data
     mkdir /data/vendor/thermal 0771 root system
     mkdir /data/vendor/thermal/config 0771 root system
