@@ -91,6 +91,11 @@ on early-init
     rm /data/resource-cache
     rm /data/system/package_cache
 
+on early-init && property:ro.boot.mode=charger
+    setprop vendor.skip.init 1
+    # Loading kernel modules in background
+    start vendor.modprobe
+
 on init
     # Create cgroup mount point for memory
     mkdir /sys/fs/cgroup/memory/bg 0750 root system
