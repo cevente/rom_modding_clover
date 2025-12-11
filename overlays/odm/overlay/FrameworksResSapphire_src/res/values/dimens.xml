@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="dimen" name="config_screenBrightnessDimFloat">0.00342131</item>
+    <item type="dimen" name="config_screenBrightnessSettingDefaultFloat">0.14956012</item>
+    <item type="dimen" name="config_screenBrightnessSettingMaximumFloat">1.0</item>
+    <item type="dimen" name="config_screenBrightnessSettingMinimumFloat">0.00342131</item>
+    <dimen name="rounded_corner_content_padding">47.0px</dimen>
+    <dimen name="rounded_corner_radius_bottom">75.0px</dimen>
+    <dimen name="rounded_corner_radius_top">75.0px</dimen>
+    <dimen name="status_bar_height_default">98.0px</dimen>
+    <dimen name="status_bar_height_portrait">98.0px</dimen>
+</resources>

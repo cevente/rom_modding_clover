@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public type="array" name="config_doze_brightness_sensor_to_brightness" id="0x7f010000" />
+    <public type="array" name="config_doze_brightness_sensor_to_scrim_opacity" id="0x7f010001" />
+    <public type="array" name="config_oemFastChargerStatusPath" id="0x7f010002" />
+    <public type="array" name="config_quickSettingsAutoAdd" id="0x7f010004" />
+    <public type="bool" name="doze_display_state_supported" id="0x7f020001" />
+    <public type="bool" name="doze_proximity_check_before_pulse" id="0x7f020002" />
+    <public type="bool" name="config_use_split_notification_shade" id="0x7f020000" />
+    <public type="dimen" name="keyguard_affordance_horizontal_offset" id="0x7f030001" />
+    <public type="dimen" name="keyguard_affordance_vertical_offset" id="0x7f030002" />
+    <public type="dimen" name="pixel_pitch" id="0x7f030005" />
+    <public type="dimen" name="status_bar_clock_starting_padding" id="0x7f030008" />
+    <public type="dimen" name="hover_system_icons_container_padding_end" id="0x7f030000" />
+    <public type="dimen" name="large_dialog_width" id="0x7f030003" />
+    <public type="dimen" name="notification_panel_margin_horizontal" id="0x7f030004" />
+    <public type="dimen" name="qqs_layout_margin_top" id="0x7f030006" />
+    <public type="dimen" name="rounded_corner_content_padding" id="0x7f030007" />
+    <public type="dimen" name="status_bar_header_height_keyguard" id="0x7f030009" />
+    <public type="integer" name="config_cpuTempDivider" id="0x7f040000" />
+    <public type="integer" name="config_screenRecorderMaxFramerate" id="0x7f040001" />
+    <public type="string" name="doze_brightness_sensor_type" id="0x7f050000" />
+</resources>

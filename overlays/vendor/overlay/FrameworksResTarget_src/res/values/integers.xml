@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="config_chargingControlBatteryRechargeMargin">10</integer>
+    <integer name="config_chargingControlTimeMargin">80</integer>
+    <integer name="config_num_physical_slots">2</integer>
+</resources>

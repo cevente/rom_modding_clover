@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    android:compileSdkVersion="36"
+    android:compileSdkVersionCodename="16"
+    package="com.android.systemui.overlay.sapphire"
+    platformBuildVersionCode="36"
+    platformBuildVersionName="16"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:hasCode="false"
+        android:extractNativeLibs="true" />
+    <overlay
+        android:priority="700"
+        android:targetPackage="com.android.systemui"
+        android:isStatic="true" />
+</manifest>

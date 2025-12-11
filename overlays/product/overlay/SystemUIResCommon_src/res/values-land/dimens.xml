@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="hover_system_icons_container_padding_end">6.0dip</dimen>
+    <dimen name="large_dialog_width">680.0dip</dimen>
+    <dimen name="notification_panel_margin_horizontal">24.0dip</dimen>
+    <dimen name="qqs_layout_margin_top">0.0dip</dimen>
+    <dimen name="rounded_corner_content_padding">130.0px</dimen>
+    <dimen name="status_bar_header_height_keyguard">94.0px</dimen>
+</resources>

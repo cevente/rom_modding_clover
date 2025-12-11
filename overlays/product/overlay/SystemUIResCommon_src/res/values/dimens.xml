@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="keyguard_affordance_horizontal_offset">20.0dip</dimen>
+    <dimen name="keyguard_affordance_vertical_offset">20.0dip</dimen>
+    <item type="dimen" name="pixel_pitch">64.41</item>
+    <dimen name="status_bar_clock_starting_padding">0.0dip</dimen>
+</resources>

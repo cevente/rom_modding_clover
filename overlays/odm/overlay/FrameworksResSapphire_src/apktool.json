@@ -1,0 +1,28 @@
+{
+  "apkFileName": "FrameworksResSapphire_src.apk",
+  "PackageInfo": {
+    "forcedPackageId": "127",
+    "renameManifestPackage": null
+  },
+  "doNotCompress": ["resources.arsc"],
+  "compressionType": false,
+  "sparseResources": false,
+  "version": "2.4.0-251127",
+  "sharedLibrary": false,
+  "VersionInfo": {
+    "versionName": "16",
+    "versionCode": "36"
+  },
+  "UsesFramework": {
+    "ids": [1],
+    "tag": null
+  },
+  "unknownFiles": {},
+  "apkFilePath": "/storage/emulated/0/git/overlays/odm/FrameworksResSapphire.apk",
+  "compactEntries": true,
+  "isFrameworkApk": false,
+  "sdkInfo": {
+    "minSdkVersion": "36",
+    "targetSdkVersion": "36"
+  }
+}
