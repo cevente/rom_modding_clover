@@ -7,7 +7,7 @@ service vendor.health-default /vendor/bin/hw/android.hardware.health-service.qti
 
 service vendor.charger /vendor/bin/hw/android.hardware.health-service.qti --charger
     class charger
-    seclabel u:r:charger:s0
+    seclabel u:r:charger_vendor:s0
     user system
     group system wakelock input graphics
     capabilities SYS_BOOT WAKE_ALARM BLOCK_SUSPEND
