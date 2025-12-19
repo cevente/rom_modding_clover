@@ -33,31 +33,37 @@ on boot
     write /sys/block/mmcblk1/queue/scheduler bfq
     
     # ========== MEMORY OPTIMIZATION ==========
-    write /proc/sys/vm/swappiness 100
+    # write /proc/sys/vm/swappiness 100
     
     # ========== NETWORK OPTIMIZATION ==========
     write /proc/sys/net/ipv4/tcp_congestion_control cubic
     write /proc/sys/net/core/rmem_max 16777216
     write /proc/sys/net/core/wmem_max 16777216
 
-service vendor.goodix-events /vendor/bin/init.goodix.events.sh
-    class late_start
-    user root
-    group root system input
-    disabled
-    oneshot
+#service vendor.goodix-events /vendor/bin/init.goodix.events.sh
+    #class late_start
+    #user root
+    #group root system input
+    #disabled
+    #oneshot
 
-service vendor.sensors-hal-multihal /vendor/bin/hw/android.hardware.sensors-service.xiaomi-multihal
-    override
-    class hal
-    user system
-    group system wakelock context_hub input uhid
-    writepid /dev/cpuset/system-background/tasks
-    socket audio_us_socket_1 seqpacket 0666 system system
-    capabilities BLOCK_SUSPEND
-    rlimit rtprio 10 10        
+#service vendor.sensors-hal-multihal /vendor/bin/hw/android.hardware.sensors-service.xiaomi-multihal
+    #override
+    #class hal
+    #user system
+   # group system wakelock context_hub input uhid
+    #writepid /dev/cpuset/system-background/tasks
+    #socket audio_us_socket_1 seqpacket 0666 system system
+    #capabilities BLOCK_SUSPEND
+   # rlimit rtprio 10 10        
 
 on post-fs-data
+    chown system system /sys/class/power_supply/wireless/reverse_chg_mode
+    chown system system /sys/class/power_supply/wireless/bt_state
+    chown system system /sys/class/power_supply/wireless/rx_cr
+    chown system system /sys/class/power_supply/main/cool_mode
+    chown system system /sys/class/power_supply/battery/night_charging
+
     write /proc/sys/vm/page-cluster 0
     # Override readahead to 2MiB during boot
     write /sys/block/dm-0/queue/read_ahead_kb 2048
@@ -275,7 +281,7 @@ on property:vendor.post_boot.parsed=1
     write /sys/block/dm-47/queue/read_ahead_kb 128
     write /sys/block/dm-48/queue/read_ahead_kb 128
     write /sys/block/dm-49/queue/read_ahead_kb 128
-    write /sys/block/mmcblk0/queue/read_ahead_kb 128
+    write /sys/block/mmcblk1/queue/read_ahead_kb 128
     write /sys/block/sda/queue/read_ahead_kb 128
     write /sys/block/sdb/queue/read_ahead_kb 128
     write /sys/block/sdc/queue/read_ahead_kb 128
@@ -283,7 +289,7 @@ on property:vendor.post_boot.parsed=1
     write /sys/block/sde/queue/read_ahead_kb 128
     write /sys/block/sdf/queue/read_ahead_kb 128
 
-    start vendor.goodix-events
+    # start vendor.goodix-events
     # Dynamically set IRQ affinity for KGSL and DRM
     # WALT Tunables for Snapdragon 685 (Bengal) - Low Lag, Low Heat Profile (Step Accurate)
     ### 🔋 Little Cores (Policy 0: Efficiency/A53-based Cores)
@@ -312,8 +318,8 @@ on property:vendor.post_boot.parsed=1
     write /sys/module/damon_reclaim/parameters/enabled Y
 
    # Enable smart batt and smart charge
-   write /sys/class/qcom-batt/smart_batt 1
-   write /sys/class/qcom-batt/smart_chg 1
+   write /sys/class/qcom-battery/smart_batt 1
+   write /sys/class/qcom-battery/smart_chg 1
    write /sys/class/power_supply/battery/smart_batt 1
    write /sys/class/power_supply/battery/smart_chg 1
 
@@ -329,7 +335,7 @@ on property:sys.boot_completed=1
     # Enable zRAM data deduplication feature
     # write /sys/block/zram0/use_dedup 1
     # Mount swap partitions specified in fstab
-    swapon_all /vendor/etc/fstab.zram
+    # swapon_all /vendor/etc/fstab.zram
 
     # ========== GPU OPTIMIZATION ==========
     # Wait for GPU to be ready
@@ -357,8 +363,158 @@ on property:sys.boot_completed=1
     write /proc/sys/vm/page-cluster 0
     start mi_thermald
 
+on property:dev.bootcomplete=1
+    chown system system /sys/class/power_supply/battery/input_suspend
+    chown system system /sys/class/power_supply/battery/smart_batt
+    chown system system /sys/class/power_supply/battery/shipmode_count_reset
+    chown system system /sys/class/power_supply/battery/cc_toggle
+    chown system system /sys/class/power_supply/battery/otg_ui_support
+    chown system system /sys/class/power_supply/battery/cid_status
+    chown system system /sys/class/power_supply/battery/lpd_update_en
+    chown system system /sys/class/power_supply/battery/smart_chg
+    chown system system /sys/class/power_supply/battery/sport_mode
+    chown system system /sys/class/power_supply/battery/hifi_connect
+    chown system system /sys/class/qcom-battery/reverse_chg_mode
+    chown system system /sys/class/qcom-battery/bt_state
+    chown system system /sys/class/qcom-battery/rx_cr
+    chown system system /sys/class/qcom-battery/input_suspend
+    chown system system /sys/class/qcom-battery/screen_unlock
+    chown system system /sys/class/qcom-battery/cool_mode
+    chown system system /sys/class/qcom-battery/night_charging
+    chown system system /sys/class/qcom-battery/bt_transfer_start
+    chown system system /sys/class/qcom-battery/wls_tx_speed
+    chown system system /sys/class/qcom-battery/wireless_chip_fw
+    chown system system /sys/class/qcom-battery/smart_batt
+    chown system system /sys/class/qcom-battery/shipmode_count_reset
+    chown system system /sys/class/qcom-battery/sport_mode
+    chown system system /sys/class/qcom-battery/server_result
+    chown system system /sys/class/qcom-battery/over_peak_flag
+    chown system system /sys/class/qcom-battery/current_deviation
+    chown system system /sys/class/qcom-battery/power_deviation
+    chown system system /sys/class/qcom-battery/average_current
+    chown system system /sys/class/qcom-battery/average_temp
+    chown system system /sys/class/qcom-battery/start_learn
+    chown system system /sys/class/qcom-battery/stop_learn
+    chown system system /sys/class/qcom-battery/set_learn_power
+    chown system system /sys/class/qcom-battery/get_learn_power
+    chown system system /sys/class/qcom-battery/get_learn_power_dev
+    chown system system /sys/class/qcom-battery/get_learn_time_dev
+    chown system system /sys/class/qcom-battery/constant_power
+    chown system system /sys/class/qcom-battery/remaining_time
+    chown system system /sys/class/qcom-battery/referance_power
+    chown system system /sys/class/qcom-battery/nvt_referance_current
+    chown system system /sys/class/qcom-battery/nvt_referance_power
+    chown system system /sys/class/qcom-battery/start_learn_b
+    chown system system /sys/class/qcom-battery/stop_learn_b
+    chown system system /sys/class/qcom-battery/set_learn_power_b
+    chown system system /sys/class/qcom-battery/get_learn_power_b
+    chown system system /sys/class/qcom-battery/get_learn_power_dev_b
+    chown system system /sys/class/qcom-battery/fg2_over_peak_flag
+    chown system system /sys/class/qcom-battery/fg2_current_deviation
+    chown system system /sys/class/qcom-battery/fg2_power_deviation
+    chown system system /sys/class/qcom-battery/fg2_average_current
+    chown system system /sys/class/qcom-battery/fg2_average_temp
+    chown system system /sys/class/qcom-battery/fg2_start_learn
+    chown system system /sys/class/qcom-battery/fg2_stop_learn
+    chown system system /sys/class/qcom-battery/fg2_set_learn_power
+    chown system system /sys/class/qcom-battery/fg2_get_learn_power
+    chown system system /sys/class/qcom-battery/fg2_get_learn_power_dev
+    chown system system /sys/class/qcom-battery/fg2_get_learn_time_dev
+    chown system system /sys/class/qcom-battery/fg2_constant_power
+    chown system system /sys/class/qcom-battery/fg2_remaining_time
+    chown system system /sys/class/qcom-battery/fg2_referance_power
+    chown system system /sys/class/qcom-battery/fg2_nvt_referance_current
+    chown system system /sys/class/qcom-battery/fg2_nvt_referance_power
+    chown system system /sys/class/qcom-battery/fg2_start_learn_b
+    chown system system /sys/class/qcom-battery/fg2_stop_learn_b
+    chown system system /sys/class/qcom-battery/fg2_set_learn_power_b
+    chown system system /sys/class/qcom-battery/fg2_get_learn_power_b
+    chown system system /sys/class/qcom-battery/fg2_get_learn_power_dev_b
+    chown system system /sys/class/qcom-battery/fg1_design_capacity
+    chown system system /sys/class/qcom-battery/fg2_design_capacity
+    chown system system /sys/class/qcom-battery/plate_shock
+    chown system system /sys/class/qcom-battery/cc_toggle
+    chown system system /sys/class/qcom-battery/otg_ui_support
+    chown system system /sys/class/qcom-battery/cid_status
+    chown system system /sys/class/qcom-battery/smart_chg
+    chown system system /sys/class/qcom-battery/hifi_connect
+    chmod 0660 /sys/class/power_supply/battery/input_suspend
+    chmod 0660 /sys/class/power_supply/battery/smart_batt
+    chmod 0660 /sys/class/power_supply/battery/shipmode_count_reset
+    chmod 0660 /sys/class/power_supply/battery/cc_toggle
+    chmod 0440 /sys/class/power_supply/battery/otg_ui_support
+    chmod 0440 /sys/class/power_supply/battery/cid_status
+    chmod 0660 /sys/class/power_supply/battery/lpd_update_en
+    chmod 0660 /sys/class/power_supply/battery/smart_chg
+    chmod 0660 /sys/class/power_supply/battery/sport_mode
+    chmod 0660 /sys/class/power_supply/battery/hifi_connect
+    chmod 0660 /sys/class/qcom-battery/reverse_chg_mode
+    chmod 0660 /sys/class/qcom-battery/rx_cr
+    chmod 0660 /sys/class/qcom-battery/input_suspend
+    chmod 0660 /sys/class/qcom-battery/screen_unlock
+    chmod 0660 /sys/class/qcom-battery/cool_mode
+    chmod 0660 /sys/class/qcom-battery/night_charging
+    chmod 0660 /sys/class/qcom-battery/bt_transfer_start
+    chmod 0660 /sys/class/qcom-battery/wls_tx_speed
+    chmod 0660 /sys/class/qcom-battery/wireless_chip_fw
+    chmod 0660 /sys/class/qcom-battery/smart_batt
+    chmod 0660 /sys/class/qcom-battery/shipmode_count_reset
+    chmod 0660 /sys/class/qcom-battery/sport_mode
+    chmod 0660 /sys/class/qcom-battery/server_result
+    chmod 0440 /sys/class/qcom-battery/over_peak_flag
+    chmod 0440 /sys/class/qcom-battery/current_deviation
+    chmod 0440 /sys/class/qcom-battery/power_deviation
+    chmod 0440 /sys/class/qcom-battery/average_current
+    chmod 0440 /sys/class/qcom-battery/average_temp
+    chmod 0660 /sys/class/qcom-battery/start_learn
+    chmod 0660 /sys/class/qcom-battery/stop_learn
+    chmod 0660 /sys/class/qcom-battery/set_learn_power
+    chmod 0440 /sys/class/qcom-battery/get_learn_power
+    chmod 0440 /sys/class/qcom-battery/get_learn_power_dev
+    chmod 0440 /sys/class/qcom-battery/get_learn_time_dev
+    chmod 0660 /sys/class/qcom-battery/constant_power
+    chmod 0440 /sys/class/qcom-battery/remaining_time
+    chmod 0660 /sys/class/qcom-battery/referance_power
+    chmod 0440 /sys/class/qcom-battery/nvt_referance_current
+    chmod 0440 /sys/class/qcom-battery/nvt_referance_power
+    chmod 0660 /sys/class/qcom-battery/start_learn_b
+    chmod 0660 /sys/class/qcom-battery/stop_learn_b
+    chmod 0660 /sys/class/qcom-battery/set_learn_power_b
+    chmod 0440 /sys/class/qcom-battery/get_learn_power_b
+    chmod 0440 /sys/class/qcom-battery/get_learn_power_dev_b
+    chmod 0666 /sys/class/qcom-battery/plate_shock
+    chmod 0440 /sys/class/qcom-battery/fg2_over_peak_flag
+    chmod 0440 /sys/class/qcom-battery/fg2_current_deviation
+    chmod 0440 /sys/class/qcom-battery/fg2_power_deviation
+    chmod 0440 /sys/class/qcom-battery/fg2_average_current
+    chmod 0440 /sys/class/qcom-battery/fg2_average_temp
+    chmod 0660 /sys/class/qcom-battery/fg2_start_learn
+    chmod 0660 /sys/class/qcom-battery/fg2_stop_learn
+    chmod 0660 /sys/class/qcom-battery/fg2_set_learn_power
+    chmod 0440 /sys/class/qcom-battery/fg2_get_learn_power
+    chmod 0440 /sys/class/qcom-battery/fg2_get_learn_power_dev
+    chmod 0440 /sys/class/qcom-battery/fg2_get_learn_time_dev
+    chmod 0660 /sys/class/qcom-battery/fg2_constant_power
+    chmod 0440 /sys/class/qcom-battery/fg2_remaining_time
+    chmod 0660 /sys/class/qcom-battery/fg2_referance_power
+    chmod 0440 /sys/class/qcom-battery/fg2_nvt_referance_current
+    chmod 0440 /sys/class/qcom-battery/fg2_nvt_referance_power
+    chmod 0660 /sys/class/qcom-battery/fg2_start_learn_b
+    chmod 0660 /sys/class/qcom-battery/fg2_stop_learn_b
+    chmod 0660 /sys/class/qcom-battery/fg2_set_learn_power_b
+    chmod 0440 /sys/class/qcom-battery/fg2_get_learn_power_b
+    chmod 0440 /sys/class/qcom-battery/fg2_get_learn_power_dev_b
+    chmod 0440 /sys/class/qcom-battery/fg1_design_capacity
+    chmod 0440 /sys/class/qcom-battery/fg2_design_capacity
+    chmod 0660 /sys/class/qcom-battery/cc_toggle
+    chmod 0440 /sys/class/qcom-battery/otg_ui_support
+    chmod 0440 /sys/class/qcom-battery/cid_status
+    chmod 0660 /sys/class/qcom-battery/smart_chg
+    chmod 0660 /sys/class/qcom-battery/hifi_connect
+
 on property:dalvik.vm.heapstartsize=16
     write /proc/sys/vm/watermark_boost_factor 0
 
 on property:ro.boot.hwname=*
     setprop ro.boot.product.hardware.sku ${ro.boot.hwname}
+
