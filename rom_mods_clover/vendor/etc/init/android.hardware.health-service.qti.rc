@@ -6,7 +6,7 @@ service vendor.health-default /vendor/bin/hw/android.hardware.health-service.qti
     file /dev/kmsg w
 
 service vendor.charger /vendor/bin/hw/android.hardware.health-service.qti --charger
-    class chargerr
+    class cevente
     seclabel u:r:charger_vendor:s0
     user system
     group system wakelock input graphics
@@ -21,5 +21,5 @@ service vendor.charger /vendor/bin/hw/android.hardware.health-service.qti --char
     #seclabel u:r:charger:s0
 
 on charger
-    class_start chargerr
+    class_start cevente
 
